@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pojok Beruang Lucu Buat Kamu 🐻💖</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Quicksand:wght@600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background-color: #ffeef2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            text-align: center;
+            position: relative;
+        }
+
+        /* Kartu Utama */
+        .main-card {
+            background-color: #ffffff;
+            border: 8px solid #ffcad7;
+            border-radius: 35px;
+            width: 450px;
+            max-width: 95%;
+            padding: 30px;
+            box-shadow: 0 15px 30px rgba(255, 180, 193, 0.4);
+            z-index: 10;
+            position: relative;
+        }
+
+        h1 {
+            font-family: 'Fredoka One', cursive;
+            color: #8c2a38;
+            font-size: 24px;
+            margin-bottom: 20px;
+            line-height: 1.4;
+        }
+
+        /* Input Nama */
+        input[type="text"] {
+            width: 100%;
+            border: 3px dashed #ffcad7;
+            border-radius: 15px;
+            padding: 15px;
+            font-size: 16px;
+            font-family: 'Quicksand', sans-serif;
+            font-weight: 700;
+            text-align: center;
+            color: #8c2a38;
+            outline: none;
+            background-color: #fff9fa;
+            margin-bottom: 25px;
+        }
+
+        input[type="text"]:focus {
+            border-style: solid;
+            border-color: #ff477e;
+            background-color: #fff;
+        }
+
+        /* Tombol Gaya Imut */
+        .btn {
+            background: linear-gradient(45deg, #8c2a38, #ff477e);
+            color: white;
+            border: none;
+            padding: 15px 35px;
+            border-radius: 50px;
+            font-size: 18px;
+            font-family: 'Fredoka One', cursive;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(140, 42, 56, 0.3);
+            transition: all 0.2s;
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(140, 42, 56, 0.5);
+        }
+
+        /* Tampilan Hasil */
+        #result-section {
+            display: none;
+        }
+
+        /* Trik Membuat Emoji Menjadi Seperti Stiker Besar */
+        .sticker-large {
+            font-size: 90px;
+            background: #fff0f3;
+            display: inline-block;
+            padding: 15px;
+            border-radius: 30px;
+            border: 3px solid #ffcad7;
+            box-shadow: 0 8px 15px rgba(0,0,0,0.05);
+            margin-bottom: 20px;
+            line-height: 1;
+            animation: bounce 0.6s ease infinite alternate;
+        }
+
+        @keyframes bounce {
+            from { transform: translateY(0); }
+            to { transform: translateY(-8px); }
+        }
+
+        /* Kotak Isi Kata-kata */
+        .content-box {
+            background-color: #fcf6e6;
+            border-radius: 20px;
+            border: 2px solid #f3e5c8;
+            padding: 20px;
+            margin-bottom: 20px;
+            text-align: left;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.02);
+        }
+
+        .love-text {
+            color: #4a4a4a;
+            font-size: 17px;
+            line-height: 1.6;
+            font-weight: 700;
+        }
+
+        .highlight {
+            color: #ff477e;
+            font-weight: 900;
+            background-color: #ffe5ec;
+            padding: 2px 6px;
+            border-radius: 5px;
+        }
+
+        /* Dekorasi Baris Stiker Mini di Bawah */
+        .sticker-row {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 25px;
+            background: #fff9fa;
+            padding: 10px;
+            border-radius: 15px;
+        }
+
+        .sticker-mini {
+            font-size: 30px;
+            background: white;
+            padding: 5px 10px;
+            border-radius: 10px;
+            border: 1px solid #ffcad7;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        /* Efek Hati Latar Belakang */
+        .floating-heart {
+            position: absolute;
+            bottom: -10vh;
+            animation: floatUp 5s linear infinite;
+            z-index: 1;
+            user-select: none;
+            opacity: 0.6;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(0) rotate(0deg); opacity: 0.8; }
+            100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Wadah untuk dekorasi melayang di latar belakang -->
+    <div id="hearts-container"></div>
+
+    <div class="main-card">
+        <!-- HALAMAN 1: MASUKKAN NAMA -->
+        <div id="input-section">
+            <div style="font-size: 70px; margin-bottom: 15px;">🧸</div>
+            <h1>Halo Manis! 💖<br>Masukkan namamu dulu yuk:</h1>
+            <input type="text" id="nama-input" placeholder="Tulis nama kamu di sini ya..." autocomplete="off">
+            <button class="btn" onclick="mulaiKejutan()">Klik Aku! 🐾</button>
+        </div>
+
+        <!-- HALAMAN 2: HASIL (Full Emoji Beruang) -->
+        <div id="result-section">
+            <!-- Stiker Emoji Besar Atas -->
+            <div class="sticker-large" id="main-sticker">🐻</div>
+            
+            <!-- Kotak Gombalan Padat Hiasan -->
+            <div class="content-box">
+                <p class="love-text" id="teks-gombalan"></p>
+            </div>
+
+            <!-- Baris Dekorasi Stiker Mini Biar Ramai -->
+            <div class="sticker-row">
+                <span class="sticker-mini">🧸</span>
+                <span class="sticker-mini">💝</span>
+                <span class="sticker-mini">🐼</span>
+                <span class="sticker-mini">✨</span>
+                <span class="sticker-mini">🐨</span>
+            </div>
+
+            <button class="btn" onclick="gombalanBerikutnya()">Lanjut Lagi! 🐻👉</button>
+        </div>
+    </div>
+
+    <script>
+        let namaPengguna = "";
+        let indeksGombalan = 0;
+
+        // Data Gombalan beserta Emoji Karakter Utamanya
+        const dataGombalan = [
+            {
+                emoji: "🐻",
+                teks: "Hai <span class='highlight'>[NAMA]</span> 🐻, kamu tahu gak bedanya kamu sama beruang madu? Kalau beruang madu sukanya cari madu di hutan, kalau aku cukup liatin kamu aja udah berasa manis banget idup ini! 🍯❤️✨"
+            },
+            {
+                emoji: "🧸",
+                teks: "Cintaku ke kamu itu ibarat pelukan boneka beruang (bear hug) buat <span class='highlight'>[NAMA]</span>... 🧸 Pelukannya erat banget, super hangat, nyaman, dan gak bakal pernah mau aku lepasin selamanya! 🥰💕"
+            },
+            {
+                emoji: "🐼",
+                teks: "Kalau disuruh milih pergi ke kebun binatang buat liat panda yang lucu, aku bakal nolak bgt <span class='highlight'>[NAMA]</span>! 🐼 Soalnya makhluk paling lucu imut sejagat raya kan udah ada di depan mata aku sekarang! 👑🌸"
+            },
+            {
+                emoji: "🐨",
+                teks: "Tahu gak <span class='highlight'>[NAMA]</span>? 🐨 Beruang itu kan sukanya nempel di pohon terus tidur ya. Nah, hatiku juga mirip beruang kok... Maunya nempel teeeerus di hati kamu dan gak mau pindah ke lain tempat! 🌿💖"
+            },
+            {
+                emoji: "🐻‍❄️",
+                teks: "Kamu tahu gak kenapa beruang kutub jalannya lambat <span class='highlight'>[NAMA]</span>? 🐻‍❄️ Karena mereka lagi sibuk mikirin gimana caranya bisa se-estetik dan secantik kamu waktu lagi tersenyum! ❄️ short circuit langsung otakkku! 😍"
+            },
+            {
+                emoji: "🐾",
+                teks: "Permisi <span class='highlight'>[NAMA]</span>! 🐾 Tolong jangan senyum manis-manis ya. Soalnya senyuman kamu itu bikin kawanan beruang di hutan pada demo karena cemburu ada yang menyaingi keimutan mereka! 🍯🤣"
+            }
+        ];
+
+        function mulaiKejutan() {
+            const input = document.getElementById("nama-input").value.trim();
+            
+            if (input === "") {
+                alert("Eits! Namanya ditulis dulu dong manis, jangan dikosongin yaaa... 🥺🧸");
+                return;
+            }
+
+            namaPengguna = input;
+            
+            document.getElementById("input-section").style.display = "none";
+            document.getElementById("result-section").style.display = "block";
+            
+            // Acak urutan kata-kata agar variatif
+            dataGombalan.sort(() => Math.random() - 0.5);
+            
+            tampilkanKonten();
+            ledakanEfek();
+        }
+
+        function tampilkanKonten() {
+            const kontenSekarang = dataGombalan[indeksGombalan];
+
+            // Masukkan emoji besar atas
+            document.getElementById("main-sticker").innerText = kontenSekarang.emoji;
+
+            // Masukkan teks gombalan dan sisipkan nama
+            let teksFinal = kontenSekarang.teks.replace(/\[NAMA\]/g, namaPengguna);
+            document.getElementById("teks-gombalan").innerHTML = teksFinal;
+        }
+
+        function gombalanBerikutnya() {
+            indeksGombalan++;
+            if (indeksGombalan >= dataGombalan.length) {
+                indeksGombalan = 0;
+                dataGombalan.sort(() => Math.random() - 0.5); // Acak ulang jika putaran habis
+            }
+            
+            tampilkanKonten();
+            ledakanEfek();
+        }
+
+        // Fungsi membuat elemen emoji melayang di latar belakang
+        function buatElemenMelayang() {
+            const heart = document.createElement("div");
+            heart.classList.add("floating-heart");
+            
+            // Variasi item dekorasi beruang dan cinta
+            const itemDekorasi = ["🐻", "🧸", "🐼", "💖", "💝", "✨", "🐾"];
+            heart.innerHTML = itemDekorasi[Math.floor(Math.random() * itemDekorasi.length)];
+            
+            heart.style.left = Math.random() * 100 + "vw";
+            heart.style.animationDuration = (Math.random() * 2 + 3) + "s";
+            heart.style.fontSize = (Math.random() * 20 + 15) + "px";
+
+            document.getElementById("hearts-container").appendChild(heart);
+
+            setTimeout(() => { heart.remove(); }, 5000);
+        }
+
+        // Latar belakang otomatis mengalirkan emoji kecil secara santai
+        setInterval(buatElemenMelayang, 400);
+
+        // Efek semburan emoji saat tombol diklik
+        function ledakanEfek() {
+            for (let i = 0; i < 15; i++) {
+                setTimeout(buatElemenMelayang, i * 70);
+            }
+        }
+    </script>
+</body>
+  </html>
