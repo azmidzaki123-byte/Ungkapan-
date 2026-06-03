@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pojok Beruang Lucu Buat Kamu 🐻💖</title>
-    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Quicksand:wght@600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Quicksand:wght=600;700&display=swap" rel="stylesheet">
     <style>
         * {
             box-sizing: border-box;
@@ -45,8 +45,8 @@
             line-height: 1.4;
         }
 
-        /* Input Nama */
-        input[type="text"] {
+        /* Input Nama & Textarea */
+        input[type="text"], textarea {
             width: 100%;
             border: 3px dashed #ffcad7;
             border-radius: 15px;
@@ -59,9 +59,10 @@
             outline: none;
             background-color: #fff9fa;
             margin-bottom: 25px;
+            resize: none;
         }
 
-        input[type="text"]:focus {
+        input[type="text"]:focus, textarea:focus {
             border-style: solid;
             border-color: #ff477e;
             background-color: #fff;
@@ -86,12 +87,12 @@
             box-shadow: 0 8px 20px rgba(140, 42, 56, 0.5);
         }
 
-        /* Tampilan Hasil */
-        #result-section {
+        /* Sembunyikan bagian section default */
+        #result-section, #form-pesan-section {
             display: none;
         }
 
-        /* Trik Membuat Emoji Menjadi Seperti Stiker Besar */
+        /* Stiker Emoji Besar Atas */
         .sticker-large {
             font-size: 90px;
             background: #fff0f3;
@@ -174,11 +175,9 @@
 </head>
 <body>
 
-    <!-- Wadah untuk dekorasi melayang di latar belakang -->
     <div id="hearts-container"></div>
 
     <div class="main-card">
-        <!-- HALAMAN 1: MASUKKAN NAMA -->
         <div id="input-section">
             <div style="font-size: 70px; margin-bottom: 15px;">🧸</div>
             <h1>Halo Manis! 💖<br>Masukkan namamu dulu yuk:</h1>
@@ -186,17 +185,13 @@
             <button class="btn" onclick="mulaiKejutan()">Klik Aku! 🐾</button>
         </div>
 
-        <!-- HALAMAN 2: HASIL (Full Emoji Beruang) -->
         <div id="result-section">
-            <!-- Stiker Emoji Besar Atas -->
             <div class="sticker-large" id="main-sticker">🐻</div>
             
-            <!-- Kotak Gombalan Padat Hiasan -->
             <div class="content-box">
                 <p class="love-text" id="teks-gombalan"></p>
             </div>
 
-            <!-- Baris Dekorasi Stiker Mini Biar Ramai -->
             <div class="sticker-row">
                 <span class="sticker-mini">🧸</span>
                 <span class="sticker-mini">💝</span>
@@ -205,7 +200,17 @@
                 <span class="sticker-mini">🐨</span>
             </div>
 
-            <button class="btn" onclick="gombalanBerikutnya()">Lanjut Lagi! 🐻👉</button>
+            <button class="btn" id="btn-next" onclick="gombalanBerikutnya()">Lanjut Lagi! 🐻👉</button>
+        </div>
+
+        <div id="form-pesan-section">
+            <div class="sticker-large">💌</div>
+            <h1>Bagi Cerita yuk! 💕</h1>
+            <p style="color: #8c2a38; font-weight: 700; margin-bottom: 15px; font-size: 15px;">
+                Tulis pesan manis, kesan, atau jawaban kamu di bawah ini ya:
+            </p>
+            <textarea id="pesan-balasan" rows="4" placeholder="Ketik pesan rahasiamu di sini... 🐾"></textarea>
+            <button class="btn" onclick="kirimKeGmail()">Kirim Surat Cinta 🚀</button>
         </div>
     </div>
 
@@ -213,7 +218,6 @@
         let namaPengguna = "";
         let indeksGombalan = 0;
 
-        // Data Gombalan beserta Emoji Karakter Utamanya
         const dataGombalan = [
             {
                 emoji: "🐻",
@@ -233,7 +237,7 @@
             },
             {
                 emoji: "🐻‍❄️",
-                teks: "Kamu tahu gak kenapa beruang kutub jalannya lambat <span class='highlight'>[NAMA]</span>? 🐻‍❄️ Karena mereka lagi sibuk mikirin gimana caranya bisa se-estetik dan secantik kamu waktu lagi tersenyum! ❄️ short circuit langsung otakkku! 😍"
+                teks: "Kamu tahu gak kenapa beruang kutub jalannya lambat <span class='highlight'>[NAMA]</span>? 🐻‍❄️ Karena mereka lagi sibuk mikirin gimana caranya bisa se-estetik dan secantik kamu waktu lagi tersenyum! ❄️ Meleleh langsung otakkku! 😍"
             },
             {
                 emoji: "🐾",
@@ -254,7 +258,6 @@
             document.getElementById("input-section").style.display = "none";
             document.getElementById("result-section").style.display = "block";
             
-            // Acak urutan kata-kata agar variatif
             dataGombalan.sort(() => Math.random() - 0.5);
             
             tampilkanKonten();
@@ -263,32 +266,54 @@
 
         function tampilkanKonten() {
             const kontenSekarang = dataGombalan[indeksGombalan];
-
-            // Masukkan emoji besar atas
             document.getElementById("main-sticker").innerText = kontenSekarang.emoji;
 
-            // Masukkan teks gombalan dan sisipkan nama
             let teksFinal = kontenSekarang.teks.replace(/\[NAMA\]/g, namaPengguna);
             document.getElementById("teks-gombalan").innerHTML = teksFinal;
+
+            // Jika berada di kalimat gombalan terakhir, ubah teks tombolnya
+            if (indeksGombalan === dataGombalan.length - 1) {
+                document.getElementById("btn-next").innerHTML = "Tulis Pesan Balasan 💌";
+            }
         }
 
         function gombalanBerikutnya() {
-            indeksGombalan++;
-            if (indeksGombalan >= dataGombalan.length) {
-                indeksGombalan = 0;
-                dataGombalan.sort(() => Math.random() - 0.5); // Acak ulang jika putaran habis
+            // Jika tombol diklik saat di halaman terakhir, pindah ke form surat
+            if (indeksGombalan === dataGombalan.length - 1) {
+                document.getElementById("result-section").style.display = "none";
+                document.getElementById("form-pesan-section").style.display = "block";
+                ledakanEfek();
+                return;
             }
-            
+
+            indeksGombalan++;
             tampilkanKonten();
             ledakanEfek();
         }
 
-        // Fungsi membuat elemen emoji melayang di latar belakang
+        // FUNGSI UTAMA UNTUK MENGIRIM PESAN KE GMAIL KAMU
+        function kirimKeGmail() {
+            const isiPesan = document.getElementById("pesan-balasan").value.trim();
+
+            if (isiPesan === "") {
+                alert("Tulis sesuatu dulu dong manis di kotaknya, jangan dikosongin ya... 🥺💌");
+                return;
+            }
+
+            const emailTujuan = "azmidzaki123@gmail.com";
+            const subjekEmail = encodeURIComponent("Surat Balasan Romantis dari " + namaPengguna);
+            const isiEmail = encodeURIComponent(
+                "Halo Azmi Zaki!\n\nBerikut adalah pesan balasan dari " + namaPengguna + ":\n\n\"" + isiPesan + "\"\n\nDikirim langsung melalui Website Pojok Beruang 🐻💖"
+            );
+
+            // Perintah membuka aplikasi email default client / Gmail otomatis
+            window.location.href = "mailto:" + emailTujuan + "?subject=" + subjekEmail + "&body=" + isiEmail;
+        }
+
         function buatElemenMelayang() {
             const heart = document.createElement("div");
             heart.classList.add("floating-heart");
             
-            // Variasi item dekorasi beruang dan cinta
             const itemDekorasi = ["🐻", "🧸", "🐼", "💖", "💝", "✨", "🐾"];
             heart.innerHTML = itemDekorasi[Math.floor(Math.random() * itemDekorasi.length)];
             
@@ -297,14 +322,11 @@
             heart.style.fontSize = (Math.random() * 20 + 15) + "px";
 
             document.getElementById("hearts-container").appendChild(heart);
-
             setTimeout(() => { heart.remove(); }, 5000);
         }
 
-        // Latar belakang otomatis mengalirkan emoji kecil secara santai
         setInterval(buatElemenMelayang, 400);
 
-        // Efek semburan emoji saat tombol diklik
         function ledakanEfek() {
             for (let i = 0; i < 15; i++) {
                 setTimeout(buatElemenMelayang, i * 70);
@@ -312,4 +334,4 @@
         }
     </script>
 </body>
-  </html>
+</html>
